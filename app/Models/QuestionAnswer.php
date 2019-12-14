@@ -12,4 +12,9 @@ class QuestionAnswer extends Model
     protected $fillable = [
         'question_id', 'option_id'
     ];
+
+    public function option()
+    {
+        return $this->belongsTo(Option::class);
+    }
 }

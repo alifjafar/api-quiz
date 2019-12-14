@@ -24,7 +24,7 @@ class QuizController extends Controller
     {
         $this->authorize('view', $quiz);
 
-        if ($request->get('type') == 'take' and $quiz['is_private']) {
+        if ($quiz['is_private']) {
             $validated = $this->validate($request, [
                 'password' => 'required'
             ]);
@@ -39,10 +39,24 @@ class QuizController extends Controller
             }
         }
 
-        $quiz->load(['questions.options', 'category']);
+        $quiz->load([
+            'questions' => function ($q) {return $q->inRandomOrder();},
+            'questions.options' => function($q) {return $q->inRandomOrder();},
+            'category'
+        ]);
 
         return QuizWithQuestionResource::make($quiz);
     }
+
+    public function edit(Quiz $quiz)
+    {
+        $this->authorize('edit', $quiz);
+
+        $quiz->load(['questions.options', 'category', 'questions.answer.option']);
+
+        return QuizWithQuestionResource::make($quiz);
+    }
+
 
     public function store(Request $request)
     {

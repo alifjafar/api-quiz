@@ -7,7 +7,7 @@ class QuestionResource extends BaseResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -15,7 +15,8 @@ class QuestionResource extends BaseResource
         return [
             'id' => $this['id'],
             'content' => $this['content'],
-            'options' => OptionResource::collection($this['options'])
+            'options' => OptionResource::collection($this['options']),
+            'answer' => $this->whenLoaded('answer', $this->when($this->answer->relationLoaded('option'), OptionResource::make($this['answer']['option'])))
         ];
     }
 }

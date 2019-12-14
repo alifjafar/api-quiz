@@ -30,8 +30,30 @@ class QuizPolicy
      */
     public function view(Client $client, Quiz $quiz)
     {
+        if ($quiz['is_private']) {
+            if ($quiz['client_id'] !== $client['id']) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public function edit(Client $client, Quiz $quiz)
+    {
         if ($quiz['client_id'] !== $client['id']) {
             return false;
+        }
+
+        return true;
+    }
+
+    public function submit(Client $client, Quiz $quiz)
+    {
+        if ($quiz['is_private']) {
+            if ($quiz['client_id'] !== $client['id']) {
+                return false;
+            }
         }
 
         return true;
