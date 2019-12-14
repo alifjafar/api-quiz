@@ -42,12 +42,17 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\Response|\Symfony\Component\HttpFoundation\Response
      */
     public function render($request, Exception $exception)
     {
         $rendered = parent::render($request, $exception);
 
-        return (new ErrorResponse())->make($exception, $rendered->getStatusCode());
+
+        if ($request->segment(1) === 'api') {
+            return (new ErrorResponse())->make($exception, $rendered->getStatusCode());
+        }
+
+        return $rendered;
     }
 }
