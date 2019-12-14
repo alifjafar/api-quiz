@@ -15,6 +15,7 @@ class CreateQuizzesTable extends Migration
     {
         Schema::create('quizzes', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('name');
             $table->text('description')->nullable();
             $table->uuid('client_id');
             $table->foreign('client_id')->references('id')->on('clients');
