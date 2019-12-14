@@ -16,7 +16,7 @@ toc_footers:
 # Info
 
 Welcome to the generated API reference.
-[Get Postman Collection](http://localhost/docs/collection.json)
+[Get Postman Collection](http://quiz-api.minjemin.com/docs/collection.json)
 
 <!-- END_INFO -->
 
@@ -29,7 +29,7 @@ Welcome to the generated API reference.
 
 ```bash
 curl -X POST \
-    "http://localhost/api/quiz/1/submit" \
+    "https://quiz-api.minjemin.com/api/quiz/1/submit" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -37,7 +37,7 @@ curl -X POST \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz/1/submit"
+    "https://quiz-api.minjemin.com/api/quiz/1/submit"
 );
 
 let headers = {
@@ -55,6 +55,23 @@ fetch(url, {
 ```
 
 
+> Example response (401):
+
+```json
+{
+    "errors": [
+        {
+            "attribute": null,
+            "message": [
+                "Unauthenticated."
+            ]
+        }
+    ],
+    "meta": {
+        "http_status": 401
+    }
+}
+```
 
 ### HTTP Request
 `POST api/quiz/{quiz}/submit`
@@ -68,7 +85,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/quiz_public" \
+    -G "https://quiz-api.minjemin.com/api/quiz_public" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -76,7 +93,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz_public"
+    "https://quiz-api.minjemin.com/api/quiz_public"
 );
 
 let headers = {
@@ -124,7 +141,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/quiz" \
+    -G "https://quiz-api.minjemin.com/api/quiz" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -132,7 +149,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz"
+    "https://quiz-api.minjemin.com/api/quiz"
 );
 
 let headers = {
@@ -180,7 +197,7 @@ fetch(url, {
 
 ```bash
 curl -X POST \
-    "http://localhost/api/quiz" \
+    "https://quiz-api.minjemin.com/api/quiz" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -188,7 +205,7 @@ curl -X POST \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz"
+    "https://quiz-api.minjemin.com/api/quiz"
 );
 
 let headers = {
@@ -206,6 +223,23 @@ fetch(url, {
 ```
 
 
+> Example response (401):
+
+```json
+{
+    "errors": [
+        {
+            "attribute": null,
+            "message": [
+                "Unauthenticated."
+            ]
+        }
+    ],
+    "meta": {
+        "http_status": 401
+    }
+}
+```
 
 ### HTTP Request
 `POST api/quiz`
@@ -219,7 +253,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/quiz/1" \
+    -G "https://quiz-api.minjemin.com/api/quiz/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -227,7 +261,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz/1"
+    "https://quiz-api.minjemin.com/api/quiz/1"
 );
 
 let headers = {
@@ -269,13 +303,13 @@ fetch(url, {
 
 <!-- END_8b261c07604a3a473665e7706c6be07e -->
 
-<!-- START_cc587a0a2f7012d3ced3ebbebf69f398 -->
-## api/quiz/{quiz}
+<!-- START_3428029e18c30e6718dd51618c5ac11f -->
+## api/quiz/{quiz}/edit
 > Example request:
 
 ```bash
-curl -X PUT \
-    "http://localhost/api/quiz/1" \
+curl -X GET \
+    -G "https://quiz-api.minjemin.com/api/quiz/1/edit" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -283,7 +317,63 @@ curl -X PUT \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz/1"
+    "https://quiz-api.minjemin.com/api/quiz/1/edit"
+);
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+    "Authorization": "Bearer {token}",
+};
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response => response.json())
+    .then(json => console.log(json));
+```
+
+
+> Example response (401):
+
+```json
+{
+    "errors": [
+        {
+            "attribute": null,
+            "message": [
+                "Unauthenticated."
+            ]
+        }
+    ],
+    "meta": {
+        "http_status": 401
+    }
+}
+```
+
+### HTTP Request
+`GET api/quiz/{quiz}/edit`
+
+
+<!-- END_3428029e18c30e6718dd51618c5ac11f -->
+
+<!-- START_cc587a0a2f7012d3ced3ebbebf69f398 -->
+## api/quiz/{quiz}
+> Example request:
+
+```bash
+curl -X PUT \
+    "https://quiz-api.minjemin.com/api/quiz/1" \
+    -H "Content-Type: application/json" \
+    -H "Accept: application/json" \
+    -H "Authorization: Bearer {token}"
+```
+
+```javascript
+const url = new URL(
+    "https://quiz-api.minjemin.com/api/quiz/1"
 );
 
 let headers = {
@@ -301,6 +391,23 @@ fetch(url, {
 ```
 
 
+> Example response (401):
+
+```json
+{
+    "errors": [
+        {
+            "attribute": null,
+            "message": [
+                "Unauthenticated."
+            ]
+        }
+    ],
+    "meta": {
+        "http_status": 401
+    }
+}
+```
 
 ### HTTP Request
 `PUT api/quiz/{quiz}`
@@ -316,7 +423,7 @@ fetch(url, {
 
 ```bash
 curl -X DELETE \
-    "http://localhost/api/quiz/1" \
+    "https://quiz-api.minjemin.com/api/quiz/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -324,7 +431,7 @@ curl -X DELETE \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/quiz/1"
+    "https://quiz-api.minjemin.com/api/quiz/1"
 );
 
 let headers = {
@@ -342,6 +449,23 @@ fetch(url, {
 ```
 
 
+> Example response (401):
+
+```json
+{
+    "errors": [
+        {
+            "attribute": null,
+            "message": [
+                "Unauthenticated."
+            ]
+        }
+    ],
+    "meta": {
+        "http_status": 401
+    }
+}
+```
 
 ### HTTP Request
 `DELETE api/quiz/{quiz}`
@@ -355,7 +479,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/categories" \
+    -G "https://quiz-api.minjemin.com/api/categories" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -363,7 +487,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/categories"
+    "https://quiz-api.minjemin.com/api/categories"
 );
 
 let headers = {
@@ -411,7 +535,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/categories/1/quiz/private" \
+    -G "https://quiz-api.minjemin.com/api/categories/1/quiz/private" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -419,7 +543,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/categories/1/quiz/private"
+    "https://quiz-api.minjemin.com/api/categories/1/quiz/private"
 );
 
 let headers = {
@@ -467,7 +591,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/categories/1/quiz/public" \
+    -G "https://quiz-api.minjemin.com/api/categories/1/quiz/public" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -475,7 +599,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/categories/1/quiz/public"
+    "https://quiz-api.minjemin.com/api/categories/1/quiz/public"
 );
 
 let headers = {
@@ -523,7 +647,7 @@ fetch(url, {
 
 ```bash
 curl -X GET \
-    -G "http://localhost/api/intermezzo/1" \
+    -G "https://quiz-api.minjemin.com/api/intermezzo/1" \
     -H "Content-Type: application/json" \
     -H "Accept: application/json" \
     -H "Authorization: Bearer {token}"
@@ -531,7 +655,7 @@ curl -X GET \
 
 ```javascript
 const url = new URL(
-    "http://localhost/api/intermezzo/1"
+    "https://quiz-api.minjemin.com/api/intermezzo/1"
 );
 
 let headers = {
@@ -572,580 +696,5 @@ fetch(url, {
 
 
 <!-- END_d292dec4a3d6b300cf5f12ac9276e645 -->
-
-<!-- START_66e08d3cc8222573018fed49e121e96d -->
-## Show the application&#039;s login form.
-
-> Example request:
-
-```bash
-curl -X GET \
-    -G "http://localhost/login" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/login"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-null
-```
-
-### HTTP Request
-`GET login`
-
-
-<!-- END_66e08d3cc8222573018fed49e121e96d -->
-
-<!-- START_ba35aa39474cb98cfb31829e70eb8b74 -->
-## Handle a login request to the application.
-
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/login" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/login"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST login`
-
-
-<!-- END_ba35aa39474cb98cfb31829e70eb8b74 -->
-
-<!-- START_e65925f23b9bc6b93d9356895f29f80c -->
-## Log the user out of the application.
-
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/logout" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/logout"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST logout`
-
-
-<!-- END_e65925f23b9bc6b93d9356895f29f80c -->
-
-<!-- START_ff38dfb1bd1bb7e1aa24b4e1792a9768 -->
-## Show the application registration form.
-
-> Example request:
-
-```bash
-curl -X GET \
-    -G "http://localhost/register" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/register"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-null
-```
-
-### HTTP Request
-`GET register`
-
-
-<!-- END_ff38dfb1bd1bb7e1aa24b4e1792a9768 -->
-
-<!-- START_d7aad7b5ac127700500280d511a3db01 -->
-## Handle a registration request for the application.
-
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/register" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/register"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST register`
-
-
-<!-- END_d7aad7b5ac127700500280d511a3db01 -->
-
-<!-- START_d72797bae6d0b1f3a341ebb1f8900441 -->
-## Display the form to request a password reset link.
-
-> Example request:
-
-```bash
-curl -X GET \
-    -G "http://localhost/password/reset" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/password/reset"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-null
-```
-
-### HTTP Request
-`GET password/reset`
-
-
-<!-- END_d72797bae6d0b1f3a341ebb1f8900441 -->
-
-<!-- START_feb40f06a93c80d742181b6ffb6b734e -->
-## Send a reset link to the given user.
-
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/password/email" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/password/email"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST password/email`
-
-
-<!-- END_feb40f06a93c80d742181b6ffb6b734e -->
-
-<!-- START_e1605a6e5ceee9d1aeb7729216635fd7 -->
-## Display the password reset view for the given token.
-
-If no token is present, display the link request form.
-
-> Example request:
-
-```bash
-curl -X GET \
-    -G "http://localhost/password/reset/1" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/password/reset/1"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (200):
-
-```json
-null
-```
-
-### HTTP Request
-`GET password/reset/{token}`
-
-
-<!-- END_e1605a6e5ceee9d1aeb7729216635fd7 -->
-
-<!-- START_cafb407b7a846b31491f97719bb15aef -->
-## Reset the given user&#039;s password.
-
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/password/reset" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/password/reset"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST password/reset`
-
-
-<!-- END_cafb407b7a846b31491f97719bb15aef -->
-
-<!-- START_b77aedc454e9471a35dcb175278ec997 -->
-## Display the password confirmation view.
-
-> Example request:
-
-```bash
-curl -X GET \
-    -G "http://localhost/password/confirm" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/password/confirm"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (401):
-
-```json
-{
-    "errors": [
-        {
-            "attribute": null,
-            "message": [
-                "Unauthenticated."
-            ]
-        }
-    ],
-    "meta": {
-        "http_status": 401
-    }
-}
-```
-
-### HTTP Request
-`GET password/confirm`
-
-
-<!-- END_b77aedc454e9471a35dcb175278ec997 -->
-
-<!-- START_54462d3613f2262e741142161c0e6fea -->
-## Confirm the given user&#039;s password.
-
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/password/confirm" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/password/confirm"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST password/confirm`
-
-
-<!-- END_54462d3613f2262e741142161c0e6fea -->
-
-<!-- START_cb859c8e84c35d7133b6a6c8eac253f8 -->
-## Show the application dashboard.
-
-> Example request:
-
-```bash
-curl -X GET \
-    -G "http://localhost/home" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/home"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "GET",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-> Example response (401):
-
-```json
-{
-    "errors": [
-        {
-            "attribute": null,
-            "message": [
-                "Unauthenticated."
-            ]
-        }
-    ],
-    "meta": {
-        "http_status": 401
-    }
-}
-```
-
-### HTTP Request
-`GET home`
-
-
-<!-- END_cb859c8e84c35d7133b6a6c8eac253f8 -->
-
-<!-- START_383516cc0d2c54c0982ae1be1ada6d3b -->
-## integration/generate
-> Example request:
-
-```bash
-curl -X POST \
-    "http://localhost/integration/generate" \
-    -H "Content-Type: application/json" \
-    -H "Accept: application/json" \
-    -H "Authorization: Bearer {token}"
-```
-
-```javascript
-const url = new URL(
-    "http://localhost/integration/generate"
-);
-
-let headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-    "Authorization": "Bearer {token}",
-};
-
-fetch(url, {
-    method: "POST",
-    headers: headers,
-})
-    .then(response => response.json())
-    .then(json => console.log(json));
-```
-
-
-
-### HTTP Request
-`POST integration/generate`
-
-
-<!-- END_383516cc0d2c54c0982ae1be1ada6d3b -->
 
 

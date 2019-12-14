@@ -40,8 +40,12 @@ class QuizController extends Controller
         }
 
         $quiz->load([
-            'questions' => function ($q) {return $q->inRandomOrder();},
-            'questions.options' => function($q) {return $q->inRandomOrder();},
+            'questions' => function ($q) {
+                return $q->inRandomOrder();
+            },
+            'questions.options' => function ($q) {
+                return $q->inRandomOrder();
+            },
             'category'
         ]);
 
@@ -96,19 +100,34 @@ class QuizController extends Controller
             }
             DB::commit();
             $res = [
-                'message' => 'Success created quiz',
-                'code' => 200
+                'message' => [
+                    'data' => [
+                        'message' => 'Success created quiz',
+                        'quiz_id' => $quiz['id']
+                    ],
+                    'meta' => [
+                        'http_status' => 201
+                    ]
+                ],
+                'code' => 201
             ];
         } catch (\Exception $exception) {
             DB::rollBack();
             $res = [
-                'message' => 'Failed created quiz',
+                'message' => [
+                    'data' => [
+                        'message' => 'Failed created quiz',
+                    ],
+                    'meta' => [
+                        'http_status' => 400
+                    ]
+                ],
                 'code' => 400
             ];
         }
 
         return response()->json([
-            'message' => $res['message']
+            $res['message']
         ], $res['code']);
     }
 
@@ -161,20 +180,34 @@ class QuizController extends Controller
             }
             DB::commit();
             $res = [
-                'message' => 'Success update quiz',
+                'message' => [
+                    'data' => [
+                        'message' => 'Success update quiz',
+                        'quiz_id' => $quiz['id']
+                    ],
+                    'meta' => [
+                        'http_status' => 200
+                    ]
+                ],
                 'code' => 200
             ];
         } catch (\Exception $exception) {
             DB::rollBack();
-            dd($exception);
             $res = [
-                'message' => 'Failed update quiz',
+                'message' => [
+                    'data' => [
+                        'message' => 'Failed update quiz',
+                    ],
+                    'meta' => [
+                        'http_status' => 400
+                    ]
+                ],
                 'code' => 400
             ];
         }
 
         return response()->json([
-            'message' => $res['message']
+            $res['message']
         ], $res['code']);
     }
 
