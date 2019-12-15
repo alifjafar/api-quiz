@@ -9,6 +9,7 @@ use App\Http\Resources\QuizWithQuestionResource;
 use App\Models\QuestionAnswer;
 use App\Models\Quiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class QuizController extends Controller
@@ -153,7 +154,7 @@ class QuizController extends Controller
         $quiz->load(['questions.options', 'questions.answer']);
 
         $res = [];
-
+        $notDeleted = new Collection();
         DB::beginTransaction();
 
         try {
@@ -170,14 +171,16 @@ class QuizController extends Controller
 
                     if ($option['answer'] ?? null) {
                         $question->answer->update([
-                            QuestionAnswer::create([
-                                'question_id' => $question['id'],
-                                'option_id' => $option['id']
-                            ])
+                            'question_id' => $question['id'],
+                            'option_id' => $option['id']
                         ]);
                     }
                 }
+                $notDeleted->push($question['id']);
             }
+
+            if ($notDeleted)
+                $quiz->questions()->whereNotIn('id', $notDeleted->toArray())->delete();
             DB::commit();
             $res = [
                 'message' => [
