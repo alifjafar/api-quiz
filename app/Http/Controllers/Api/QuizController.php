@@ -168,7 +168,7 @@ class QuizController extends Controller
                     );
 
                     if ($option['answer'] ?? null) {
-                        $question->answer()->updateOrCreate(['question_id' => $question['id']], [
+                        $question->answer()->updateOrCreate(['question_id' => $question['id'] ?? null], [
                             'question_id' => $question['id'],
                             'option_id' => $option['id']
                         ]);

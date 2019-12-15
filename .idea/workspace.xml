@@ -78,7 +78,7 @@
         <counts>
           <entry key=".env file" value="35" />
           <entry key="Blade" value="1771" />
-          <entry key="PHP" value="10432" />
+          <entry key="PHP" value="10441" />
           <entry key="PLAIN_TEXT" value="31" />
         </counts>
       </usages-collector>
@@ -89,8 +89,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/QuizController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="170" column="94" selection-start-line="170" selection-start-column="94" selection-end-line="170" selection-end-column="94" />
+            <state relative-caret-position="340">
+              <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
               <folding>
                 <element signature="e#44#77#0#PHP" expanded="true" />
               </folding>
@@ -526,12 +526,12 @@
       <workItem from="1576326693241" duration="4240000" />
       <workItem from="1576347979268" duration="9921000" />
       <workItem from="1576361476830" duration="5619000" />
-      <workItem from="1576409543045" duration="7959000" />
+      <workItem from="1576409543045" duration="8099000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56738000" />
+    <option name="totallyTimeSpent" value="56878000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="1920" height="1050" extended-state="6" />
@@ -933,8 +933,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/QuizController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="170" column="94" selection-start-line="170" selection-start-column="94" selection-end-line="170" selection-end-column="94" />
+        <state relative-caret-position="340">
+          <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
           <folding>
             <element signature="e#44#77#0#PHP" expanded="true" />
           </folding>
