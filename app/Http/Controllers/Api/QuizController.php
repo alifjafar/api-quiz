@@ -160,14 +160,14 @@ class QuizController extends Controller
 
             foreach ($validated['questions'] as $item) {
                 $question = $quiz->questions()->updateOrCreate(['id' => $item['id'] ?? null], $item);
-                foreach ($item['options'] as $option) {
-                    $option = $question->options()->updateOrCreate(['id' => $option['id'] ?? null],
+                foreach ($item['options'] as $op) {
+                    $option = $question->options()->updateOrCreate(['id' => $op['id'] ?? null],
                         [
-                            'content' => $option['content']
+                            'content' => $op['content']
                         ]
                     );
 
-                    if ($option['answer'] ?? null) {
+                    if ($op['answer'] ?? null) {
                         $answer = QuestionAnswer::where('question_id', $question['id'])->first();
 
                         if ($answer) {
