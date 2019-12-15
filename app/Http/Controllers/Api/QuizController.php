@@ -168,10 +168,19 @@ class QuizController extends Controller
                     );
 
                     if ($option['answer'] ?? null) {
-                        $question->answer()->updateOrCreate(['question_id' => $question['id'] ?? null], [
-                            'question_id' => $question['id'],
-                            'option_id' => $option['id']
-                        ]);
+                        $answer = QuestionAnswer::where('question_id', $question['id'])->first();
+
+                        if ($answer) {
+                            $answer->update([
+                                'question_id' => $question['id'],
+                                'option_id' => $option['id']
+                            ]);
+                        } else {
+                            QuestionAnswer::create([
+                                'question_id' => $question['id'],
+                                'option_id' => $option['id']
+                            ]);
+                        }
                     }
                 }
                 $notDeleted->push($question['id']);

@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7576d536-8e7a-404d-8ca9-45f72eccfd72" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/QuizController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/QuizController.php" afterDir="false" />
-    </list>
+    <list default="true" id="7576d536-8e7a-404d-8ca9-45f72eccfd72" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,8 +87,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/QuizController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
+            <state relative-caret-position="265">
+              <caret line="163" column="99" lean-forward="true" selection-start-line="163" selection-start-column="99" selection-end-line="163" selection-end-column="99" />
               <folding>
                 <element signature="e#44#77#0#PHP" expanded="true" />
               </folding>
@@ -526,12 +524,12 @@
       <workItem from="1576326693241" duration="4240000" />
       <workItem from="1576347979268" duration="9921000" />
       <workItem from="1576361476830" duration="5619000" />
-      <workItem from="1576409543045" duration="8099000" />
+      <workItem from="1576409543045" duration="8227000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="56878000" />
+    <option name="totallyTimeSpent" value="57006000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="30" width="1920" height="1050" extended-state="6" />
@@ -933,8 +931,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/QuizController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="168" lean-forward="true" selection-start-line="168" selection-end-line="168" />
+        <state relative-caret-position="265">
+          <caret line="163" column="99" lean-forward="true" selection-start-line="163" selection-start-column="99" selection-end-line="163" selection-end-column="99" />
           <folding>
             <element signature="e#44#77#0#PHP" expanded="true" />
           </folding>
