@@ -143,7 +143,7 @@ class QuizController extends Controller
             'questions' => 'required|array',
             'questions.*.content' => 'required|string',
             'questions.*.id' => 'sometimes|nullable',
-            'questions.*.options.*.id' => 'sometimes|nullable',
+            'questions.*.options.*.id' => 'sometimes|nullable|exists:options,id',
             'questions.*.options.*.content' => 'required|string',
             'questions.*.options.*.answer' => 'sometimes|nullable',
         ]);
@@ -168,7 +168,7 @@ class QuizController extends Controller
                     );
 
                     if ($option['answer'] ?? null) {
-                        $question->answer()->update([
+                        $question->answer()->updateOrCreate(['question_id' => $question['id'], [
                             'question_id' => $question['id'],
                             'option_id' => $option['id']
                         ]);
