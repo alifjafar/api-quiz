@@ -127,9 +127,7 @@ class QuizController extends Controller
             ];
         }
 
-        return response()->json([
-            $res['message']
-        ], $res['code']);
+        return response()->json($res['message'], $res['code']);
     }
 
     public function update(Request $request, Quiz $quiz)
@@ -209,9 +207,7 @@ class QuizController extends Controller
             ];
         }
 
-        return response()->json([
-            $res['message']
-        ], $res['code']);
+        return response()->json($res['message'], $res['code']);
     }
 
     public function destroy(Quiz $quiz)
