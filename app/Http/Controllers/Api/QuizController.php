@@ -168,7 +168,7 @@ class QuizController extends Controller
                     );
 
                     if ($option['answer'] ?? null) {
-                        $question->answer->update([
+                        $question->answer()->update([
                             'question_id' => $question['id'],
                             'option_id' => $option['id']
                         ]);
