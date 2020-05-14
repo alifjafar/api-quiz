@@ -1,0 +1,49 @@
+version: '3.7'
+services:
+  app:
+    build:
+      args:
+        user: apiquiz
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: api-quiz
+    container_name: api-quiz-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - api-quiz
+
+  databases:
+    image: mysql:8
+    container_name: api-quiz-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - api-quiz
+
+  nginx:
+    image: nginx:1.17-alpine
+    container_name: api-quiz-nginx
+    restart: unless-stopped
+    ports:
+      - 8009:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    networks:
+      - api-quiz
+
+networks:
+  api-quiz:
+    driver: bridge
