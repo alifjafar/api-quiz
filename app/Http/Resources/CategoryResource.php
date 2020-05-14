@@ -19,7 +19,7 @@ class CategoryResource extends BaseResource
             'id' => $this['id'],
             'name' => $this['name'],
             'slug' => $this['slug'],
-            'total_quiz' => $this->when($this->resource->relationLoaded('quizzes'), $this['total_quiz'])
+            'total_quiz' => $this->when(isset($this['quizzes_count']), $this['quizzes_count'])
         ];
     }
 }

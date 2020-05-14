@@ -11,7 +11,8 @@ class CategoryController extends Controller
 {
     public function __invoke()
     {
-        $categories = Category::with('quizzes')->get();
+        $categories = Category::withCount('quizzes')->get();
+
 
         return CategoryResource::collection($categories);
     }
