@@ -1,15 +1,18 @@
 <?php
-namespace App\Http\Resources;
-use Illuminate\Http\Resources\Json\ResourceCollection;
+
+namespace App\Resources;
+
 use Illuminate\Pagination\AbstractPaginator;
-class BaseCollection extends ResourceCollection
+
+class BaseCollection extends CustomResourceCollection
 {
     public $collects;
+
     /**
      * Create a new anonymous resource collection.
      *
-     * @param  mixed  $resource
-     * @param  string  $collects
+     * @param mixed $resource
+     * @param string $collects
      * @return void
      */
     public function __construct($resource, $collects)
@@ -17,16 +20,18 @@ class BaseCollection extends ResourceCollection
         $this->collects = $collects;
         parent::__construct($resource);
     }
+
     /**
      * Transform the resource collection into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
         return parent::toArray($request);
     }
+
     public function with($request)
     {
         return [
@@ -35,4 +40,12 @@ class BaseCollection extends ResourceCollection
             ]
         ];
     }
-}
+
+    public function toResponse($request)
+    {
+        return $this->resource instanceof AbstractPaginator
+            ? (new CustomPaginateResourceResponse($this))->toResponse($request)
+            : parent::toResponse($request);
+    }
+
+ }

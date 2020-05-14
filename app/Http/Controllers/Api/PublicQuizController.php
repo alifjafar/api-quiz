@@ -13,7 +13,6 @@ class PublicQuizController extends Controller
     {
         $quiz = Quiz::with(['questions', 'category', 'client'])->whereIsPrivate(false)->latest()->paginate(20);
 
-
         return QuizResource::collection($quiz);
     }
 }

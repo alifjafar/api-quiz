@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Resources\BaseResource;
+
 class OptionResource extends BaseResource
 {
     /**

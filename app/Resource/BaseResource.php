@@ -1,18 +1,19 @@
 <?php
 
+namespace App\Resources;
 
-namespace App\Http\Resources;
+use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-use Illuminate\Http\Resources\Json\Resource;
-
-class BaseResource extends Resource
+class BaseResource extends JsonResource
 {
     private $status = 200;
+    private $message = 'Success Retrieved Data';
 
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
@@ -42,5 +43,23 @@ class BaseResource extends Resource
     {
         $this->status = $status;
         return $this;
+    }
+
+    public function setMessage($message)
+    {
+        $this->message = $message;
+        return $this;
+    }
+
+    public function getMessage()
+    {
+        return [
+            'message' => $this->message
+        ];
+    }
+
+    public function toResponse($request)
+    {
+        return (new CustomResourceResponse($this))->toResponse($request);
     }
 }

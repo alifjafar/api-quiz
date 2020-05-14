@@ -20,6 +20,6 @@ class Category extends Model
 
     public function getTotalQuizAttribute()
     {
-        return $this->quizzes()->count();
+        return $this->quizzes->count();
     }
 }

@@ -2,12 +2,15 @@
 
 namespace App\Http\Resources;
 
+use App\Resources\BaseResource;
+use Illuminate\Http\Request;
+
 class CategoryResource extends BaseResource
 {
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
@@ -16,7 +19,7 @@ class CategoryResource extends BaseResource
             'id' => $this['id'],
             'name' => $this['name'],
             'slug' => $this['slug'],
-            'total_quiz' => $this->whenLoaded('quizzes', $this['total_quiz'])
+            'total_quiz' => $this->when($this->resource->relationLoaded('quizzes'), $this['total_quiz'])
         ];
     }
 }

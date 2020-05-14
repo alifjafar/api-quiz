@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class ErrorResponse
 {
-    public function make(\Exception $exception, $code = 500): JsonResponse
+    public function make(\Throwable $exception, $code = 500): JsonResponse
     {
         if ($exception instanceof NotFoundHttpException) {
             return $this->errorResponse("Not Found", $code);
@@ -104,7 +104,7 @@ class ErrorResponse
         return $err;
     }
 
-    private function internalServerError(\Exception $exception, $code)
+    private function internalServerError(\Throwable $exception, $code)
     {
         $trace = config('app.debug') ? $exception->getTraceAsString() : null;
         if ($exception instanceof FileNotFoundException) {

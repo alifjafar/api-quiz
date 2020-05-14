@@ -21,23 +21,6 @@ class QuizPolicy
         //
     }
 
-    /**
-     * Determine whether the user can view the quiz.
-     *
-     * @param  \App\Models\Client  $client
-     * @param  \App\Models\Quiz  $quiz
-     * @return mixed
-     */
-    public function view(Client $client, Quiz $quiz)
-    {
-        if ($quiz['is_private']) {
-            if ($quiz['client_id'] !== $client['id']) {
-                return false;
-            }
-        }
-
-        return true;
-    }
 
     public function edit(Client $client, Quiz $quiz)
     {

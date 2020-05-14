@@ -22,8 +22,14 @@ trait Uuid
             $model[$model->getKeyName()] = $uuid;
         });
     }
+
     public function getIncrementing()
     {
         return false;
+    }
+
+    public function getKeyType()
+    {
+        return "string";
     }
 }

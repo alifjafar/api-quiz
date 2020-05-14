@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Exceptions\ErrorResponse;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\QuizRequest;
+use App\Http\Requests\Api\ShowQuizRequest;
 use App\Http\Resources\QuizResource;
 use App\Http\Resources\QuizWithQuestionResource;
 use App\Models\QuestionAnswer;
 use App\Models\Quiz;
-use Illuminate\Http\Request;
+use App\Resources\BaseResponse;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
@@ -21,31 +23,14 @@ class QuizController extends Controller
         return QuizResource::collection($quiz);
     }
 
-    public function show(Request $request, Quiz $quiz)
+    public function show(ShowQuizRequest $request, Quiz $quiz)
     {
-        $this->authorize('view', $quiz);
-
-        if ($quiz['is_private']) {
-            $validated = $this->validate($request, [
-                'password' => 'required'
-            ]);
-
-            if ($validated['password'] !== $quiz['password']) {
-                return (new ErrorResponse())->errorResponse(
-                    'Quiz Password is incorrect',
-                    422,
-                    null,
-                    'password'
-                );
-            }
-        }
-
         $quiz->load([
-            'questions' => function ($q) {
-                return $q->inRandomOrder();
+            'questions' => function ($query) {
+                return $query->inRandomOrder();
             },
-            'questions.options' => function ($q) {
-                return $q->inRandomOrder();
+            'questions.options' => function ($query) {
+                return $query->inRandomOrder();
             },
             'category'
         ]);
@@ -63,95 +48,51 @@ class QuizController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(QuizRequest $request)
     {
-        $validated = $this->validate($request, [
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'is_private' => 'required|boolean',
-            'password' => 'required_if:is_private,true',
-            'questions' => 'required|array',
-            'questions.*.content' => 'required|string',
-            'questions.*.options.*.content' => 'required|string',
-            'questions.*.options.*.answer' => 'sometimes|nullable',
-        ]);
-
-        $res = [];
+        $validated = $request->validated();
 
         DB::beginTransaction();
 
         try {
             $quiz = Quiz::create($validated + ['client_id' => auth()->id()]);
 
-            foreach ($validated['questions'] as $item) {
-                $question = $quiz->questions()->create($item);
-                foreach ($item['options'] as $op) {
-                    $option = $question->options()->create([
-                        'content' => $op['content']
+            foreach ($validated['questions'] as $question) {
+                $questionCreated = $quiz->questions()->create($question);
+                foreach ($question['options'] as $option) {
+                    $optionCreated = $questionCreated->options()->create([
+                        'content' => $option['content']
                     ]);
 
-                    if ($op['answer'] ?? null) {
+                    if ($option['answer'] ?? null) {
                         QuestionAnswer::create([
-                            'question_id' => $question['id'],
-                            'option_id' => $option['id']
+                            'question_id' => $questionCreated['id'],
+                            'option_id' => $optionCreated['id']
                         ]);
                     }
                 }
             }
             DB::commit();
-            $res = [
-                'message' => [
-                    'data' => [
-                        'message' => 'Success created quiz',
-                        'quiz_id' => $quiz['id']
-                    ],
-                    'meta' => [
-                        'http_status' => 201
-                    ]
-                ],
-                'code' => 201
-            ];
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            $res = [
-                'message' => [
-                    'data' => [
-                        'message' => 'Failed created quiz',
-                    ],
-                    'meta' => [
-                        'http_status' => 400
-                    ]
-                ],
-                'code' => 400
-            ];
-        }
+            return (new BaseResponse)
+                ->setMessage('Success created quiz')
+                ->setData([
+                    'quiz_id' => $quiz['id']
+                ])
+                ->setStatus(201)
+                ->build();
 
-        return response()->json($res['message'], $res['code']);
+        } catch (QueryException $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
     }
 
-    public function update(Request $request, Quiz $quiz)
+    public function update(QuizRequest $request, Quiz $quiz)
     {
-        $this->authorize('update', $quiz);
-
-        $validated = $this->validate($request, [
-            'name' => 'required|string',
-            'description' => 'required|string',
-            'category_id' => 'required|exists:categories,id',
-            'is_private' => 'required|boolean',
-            'password' => 'required_if:is_private,true',
-            'questions' => 'required|array',
-            'questions.*.content' => 'required|string',
-            'questions.*.id' => 'sometimes|nullable',
-            'questions.*.options.*.id' => 'sometimes|nullable|exists:options,id',
-            'questions.*.options.*.content' => 'required|string',
-            'questions.*.options.*.answer' => 'sometimes|nullable',
-        ]);
-
+        $validated = $request->validated();
 
         $quiz->load(['questions.options', 'questions.answer']);
 
-        $res = [];
         $notDeleted = new Collection();
         DB::beginTransaction();
 
@@ -160,25 +101,24 @@ class QuizController extends Controller
 
             foreach ($validated['questions'] as $item) {
                 $question = $quiz->questions()->updateOrCreate(['id' => $item['id'] ?? null], $item);
-                foreach ($item['options'] as $op) {
-                    $option = $question->options()->updateOrCreate(['id' => $op['id'] ?? null],
-                        [
-                            'content' => $op['content']
-                        ]
+                $quizAnswer = QuestionAnswer::where('question_id', $question['id'])->first();
+
+                foreach ($item['options'] as $option) {
+                    $newOption = $question->options()->updateOrCreate(
+                        ['id' => $option['id'] ?? null],
+                        ['content' => $option['content']]
                     );
 
-                    if ($op['answer'] ?? null) {
-                        $answer = QuestionAnswer::where('question_id', $question['id'])->first();
-
-                        if ($answer) {
-                            $answer->update([
+                    if ($option['answer'] ?? null) {
+                        if ($quizAnswer) {
+                            $quizAnswer->update([
                                 'question_id' => $question['id'],
-                                'option_id' => $option['id']
+                                'option_id' => $newOption['id']
                             ]);
                         } else {
                             QuestionAnswer::create([
                                 'question_id' => $question['id'],
-                                'option_id' => $option['id']
+                                'option_id' => $newOption['id']
                             ]);
                         }
                     }
@@ -188,35 +128,19 @@ class QuizController extends Controller
 
             if ($notDeleted)
                 $quiz->questions()->whereNotIn('id', $notDeleted->toArray())->delete();
-            DB::commit();
-            $res = [
-                'message' => [
-                    'data' => [
-                        'message' => 'Success update quiz',
-                        'quiz_id' => $quiz['id']
-                    ],
-                    'meta' => [
-                        'http_status' => 200
-                    ]
-                ],
-                'code' => 200
-            ];
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            $res = [
-                'message' => [
-                    'data' => [
-                        'message' => 'Failed update quiz',
-                    ],
-                    'meta' => [
-                        'http_status' => 400
-                    ]
-                ],
-                'code' => 400
-            ];
-        }
 
-        return response()->json($res['message'], $res['code']);
+            DB::commit();
+            return (new BaseResponse)
+                ->setMessage('Success update quiz')
+                ->setData([
+                    'quiz_id' => $quiz['id']
+                ])
+                ->setStatus(200)
+                ->build();
+        } catch (QueryException $exception) {
+            DB::rollBack();
+            throw $exception;
+        }
     }
 
     public function destroy(Quiz $quiz)
@@ -225,8 +149,9 @@ class QuizController extends Controller
 
         $quiz->delete();
 
-        return response()->json([
-            'message' => 'Success Delete Quiz'
-        ]);
+        return (new BaseResponse)
+            ->setMessage('Success Delete Quiz')
+            ->setStatus(200)
+            ->build();
     }
 }
