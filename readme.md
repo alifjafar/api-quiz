@@ -8,7 +8,7 @@
 
 ## Installation
 ```bash
-git clone https://github.com/alifjafar/api-quiz.git .
+git clone https://github.com/alifjafar/api-quiz.git
 cp .env.example .env && nano .env
 ```
 
